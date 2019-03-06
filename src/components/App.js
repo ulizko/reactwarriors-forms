@@ -10,7 +10,8 @@ export default class App extends React.Component {
       password: "",
       repeatPassword: "",
       country: "1",
-      gender: "male"
+      gender: "male",
+      agree: true
     };
   }
 
