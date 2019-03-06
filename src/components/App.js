@@ -17,10 +17,12 @@ export default class App extends React.Component {
       gender: "male",
       agree: true,
       avatar: "",
+      age: 0,
       errors: {
         username: false,
         password: false,
-        repeatPassword: false
+        repeatPassword: false,
+        age: false
       }
     };
   }
@@ -87,6 +89,48 @@ export default class App extends React.Component {
         {item.name}
       </option>
     ));
+  };
+
+  incrementAge = () => {
+    this.setState(
+      prevState => ({
+        age: prevState.age + 1
+      }),
+      () => {
+        if (this.state.age < 3) {
+          this.setState({
+            errors: {
+              age: "Must be more 3"
+            }
+          });
+        } else {
+          this.setState({
+            errors: {
+              age: false
+            }
+          });
+        }
+        console.log("age", this.state.age);
+      }
+    );
+    // this.setState(prevState => ({
+    //   age: prevState.age + 1
+    // }));
+    // this.setState(prevState => ({
+    //   age: prevState.age + 1
+    // }));
+    // this.setState({
+    //   age: this.state.age + 1
+    // });
+    // this.setState({
+    //   age: this.state.age + 1
+    // });
+  };
+
+  decrementAge = () => {
+    this.setState({
+      age: this.state.age - 1
+    });
   };
 
   render() {
@@ -204,6 +248,38 @@ export default class App extends React.Component {
               name="avatar"
               onChange={this.onChangeAvatar}
             />
+          </div>
+          <div className="form-group">
+            <div>
+              <label>Age</label>
+            </div>
+            <div className="btn-group">
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={this.decrementAge}
+              >
+                -
+              </button>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter age"
+                name="age"
+                value={this.state.age}
+                onChange={this.onChange}
+              />
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={this.incrementAge}
+              >
+                +
+              </button>
+            </div>
+            {this.state.errors.age ? (
+              <div className="invalid-feedback">{this.state.errors.age}</div>
+            ) : null}
           </div>
           <div className="form-check mb-2">
             <input
