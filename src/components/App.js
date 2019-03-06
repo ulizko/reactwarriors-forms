@@ -9,13 +9,24 @@ export default class App extends React.Component {
       username: "",
       password: "",
       repeatPassword: "",
-      country: "1"
+      country: "1",
+      gender: "male"
     };
   }
 
   onChange = event => {
     this.setState({
       [event.target.name]: event.target.value
+    });
+  };
+
+  onChangeAgree = event => {
+    console.log(event.target.name, event.target.value, event.target.checked);
+    console.log(typeof event.target.value);
+    this.setState({
+      [event.target.name]: event.target.checked
+      // [event.target.name]: !event.target.value not working
+      // [event.target.name]: event.target.value == "true" ? false : true
     });
   };
 
@@ -92,6 +103,51 @@ export default class App extends React.Component {
             >
               {this.getOptionsItems(countries)}
             </select>
+          </div>
+          <fieldset className="form-group">
+            <div>Gender</div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="radio"
+                id="male"
+                name="gender"
+                value="male"
+                checked={this.state.gender === "male"}
+                onChange={this.onChange}
+              />
+              <label className="form-check-label" htmlFor="male">
+                Male
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="radio"
+                id="female"
+                name="gender"
+                value="female"
+                checked={this.state.gender === "female"}
+                onChange={this.onChange}
+              />
+              <label className="form-check-label" htmlFor="female">
+                Female
+              </label>
+            </div>
+          </fieldset>
+          <div className="form-check mb-2">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="agree"
+              name="agree"
+              value={this.state.agree}
+              onChange={this.onChangeAgree}
+              checked={this.state.agree}
+            />
+            <label className="form-check-label" htmlFor="agree">
+              Confirm the processing of data
+            </label>
           </div>
           <button
             type="submit"
