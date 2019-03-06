@@ -10,7 +10,9 @@ export default class App extends React.Component {
       password: "",
       repeatPassword: "",
       country: "1",
-      gender: "male"
+      gender: "male",
+      agree: true,
+      avatar: ""
     };
   }
 
@@ -28,6 +30,17 @@ export default class App extends React.Component {
       // [event.target.name]: !event.target.value not working
       // [event.target.name]: event.target.value == "true" ? false : true
     });
+  };
+
+  onChangeAvatar = event => {
+    const reader = new FileReader();
+    reader.onload = event => {
+      this.setState({
+        avatar: event.target.result
+      });
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
   };
 
   onSubmit = event => {
@@ -135,6 +148,16 @@ export default class App extends React.Component {
               </label>
             </div>
           </fieldset>
+          <div className="form-group">
+            <label htmlFor="avatar">Avatar</label>
+            <input
+              type="file"
+              className="form-control-file"
+              id="avatar"
+              name="avatar"
+              onChange={this.onChangeAvatar}
+            />
+          </div>
           <div className="form-check mb-2">
             <input
               className="form-check-input"
