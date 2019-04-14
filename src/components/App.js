@@ -17,7 +17,7 @@ export default class App extends React.Component {
       gender: "male",
       agree: true,
       avatar: "",
-      age: 0,
+      age: 16,
       errors: {
         username: false,
         password: false,
@@ -93,44 +93,42 @@ export default class App extends React.Component {
 
   incrementAge = () => {
     this.setState(
-      prevState => ({
+      (prevState, prevProps) => ({
         age: prevState.age + 1
       }),
       () => {
-        if (this.state.age < 3) {
-          this.setState({
-            errors: {
-              age: "Must be more 3"
-            }
-          });
-        } else {
-          this.setState({
-            errors: {
-              age: false
-            }
-          });
-        }
-        console.log("age", this.state.age);
+        console.log("callback", this.state.age);
+        this.setState({
+          errors: {
+            age: this.state.age > 18 ? false : "Must be more 18"
+          }
+        });
       }
     );
-    // this.setState(prevState => ({
+
+    // this.setState((prevState, prevProps) => ({
     //   age: prevState.age + 1
     // }));
-    // this.setState(prevState => ({
+    // console.log("incrementAge", this.state.age);
+    // this.setState((prevState, prevProps) => ({
     //   age: prevState.age + 1
     // }));
-    // this.setState({
-    //   age: this.state.age + 1
-    // });
-    // this.setState({
-    //   age: this.state.age + 1
-    // });
   };
 
   decrementAge = () => {
-    this.setState({
-      age: this.state.age - 1
-    });
+    this.setState(
+      {
+        age: this.state.age - 1
+      },
+      () => {
+        console.log("callback", this.state.age);
+        this.setState({
+          errors: {
+            age: this.state.age > 18 ? false : "Must be more 18"
+          }
+        });
+      }
+    );
   };
 
   render() {
@@ -142,6 +140,7 @@ export default class App extends React.Component {
     //   </option>
     // ));
     // console.log("getOptionsCountries", getOptionsCountries);
+    console.log("render", this.state.age);
     return (
       <div className="form-container card">
         <form className="form card-body">
