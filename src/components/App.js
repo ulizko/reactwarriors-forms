@@ -8,7 +8,9 @@ export default class App extends Component {
       username: '',
       password: '',
       repeatPassword: '',
-      country: 1
+      country: 1,
+      gender: 'male',
+      agree: true
     }
   }
 
@@ -18,8 +20,16 @@ export default class App extends Component {
   }
 
   handleChange = (event) => {
+    console.log(event.target.name, event.target.value)
     this.setState({
       [event.target.name]: event.target.value
+    })
+  }
+
+  onChangeAgree = (event) => {
+    console.log(event.target.name, event.target.value, event.target.checked)
+    this.setState({
+      [event.target.name]: event.target.checked
     })
   }
 
@@ -30,7 +40,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { username, password, repeatPassword, country } = this.state
+    const { username, password, repeatPassword, country, gender, agree } = this.state
 
     return (
       <div className="form-container card">
@@ -83,7 +93,56 @@ export default class App extends Component {
               { this.getOptionsItems(countries) }
             </select>
           </div>
-          <button type="submit" className="btn btn-primary w-100" onClick={this.onSubmit}>
+          <fieldset className='form-group'>
+            <div>Gender</div>
+            <div className="form-check">
+              <input
+                type="radio"
+                name="gender"
+                id="male"
+                className="form-check-input"
+                value='male'
+                checked={gender === 'male' }
+                onChange={this.handleChange}
+              />
+              <label htmlFor="male" className='form-check-label'>
+                Male
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                type="radio"
+                name="gender"
+                id="female"
+                className="form-check-input"
+                value='female'
+                checked={gender === 'female' }
+                onChange={this.handleChange}
+              />
+              <label htmlFor="female" className='form-check-label'>
+                Female
+              </label>
+            </div>
+          </fieldset>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="agree"
+              name='agree'
+              value={agree}
+              checked={agree}
+              onChange={this.onChangeAgree}
+            />
+            <label className="form-check-label" htmlFor="agree">
+              Agree
+            </label>
+          </div>
+          <button
+            type="submit"
+            className="btn btn-primary w-100"
+            onClick={this.onSubmit}
+          >
             Submit
           </button>
         </form>
