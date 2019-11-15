@@ -10,7 +10,8 @@ export default class App extends Component {
       repeatPassword: '',
       country: 1,
       gender: 'male',
-      agree: true
+      agree: true,
+      avatar: ''
     }
   }
 
@@ -20,17 +21,25 @@ export default class App extends Component {
   }
 
   handleChange = (event) => {
-    console.log(event.target.name, event.target.value)
     this.setState({
       [event.target.name]: event.target.value
     })
   }
 
   onChangeAgree = (event) => {
-    console.log(event.target.name, event.target.value, event.target.checked)
     this.setState({
       [event.target.name]: event.target.checked
     })
+  }
+
+  onChangeAvatar = (event) => {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      this.setState({
+        avatar: e.target.result
+      })
+    }
+    reader.readAsDataURL(event.target.files[0])
   }
 
   getOptionsItems = items => {
@@ -124,6 +133,16 @@ export default class App extends Component {
               </label>
             </div>
           </fieldset>
+          <div className="form-group">
+            <label htmlFor="avatar">Avatar</label>
+            <input
+              type="file"
+              name="avatar"
+              id="avatar"
+              className="form-control-file"
+              onChange={this.onChangeAvatar}
+            />
+          </div>
           <div className="form-check">
             <input
               className="form-check-input"
