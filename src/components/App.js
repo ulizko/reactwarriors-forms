@@ -11,13 +11,32 @@ export default class App extends Component {
       country: 1,
       gender: 'male',
       agree: true,
-      avatar: ''
+      avatar: '',
+      errors: {}
     }
   }
 
   onSubmit = (event) => {
     event.preventDefault()
-    console.log(this.state)
+    const errors = {}
+
+    if ( this.state.username.length < 5 ) {
+      errors.username = 'Must be 5 characters or more'
+    }
+
+    if ( this.state.password.length < 3 ) {
+      errors.password = 'Must be 3 characters or more'
+    }
+
+    if ( this.state.repeatPassword !== this.state.password ) {
+      errors.repeatPassword = 'Must be equal to password'
+    }
+
+    this.setState({ errors })
+
+    if ( !Object.keys(errors).length > 0 ) {
+      console.log(this.state)
+    }
   }
 
   handleChange = (event) => {
@@ -49,7 +68,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { username, password, repeatPassword, country, gender, agree } = this.state
+    const { username, password, repeatPassword, country, gender, agree, errors } = this.state
 
     return (
       <div className="form-container card">
@@ -65,6 +84,11 @@ export default class App extends Component {
               value={username}
               onChange={this.handleChange}
             />
+            { errors.username &&
+            <div className="invalid-feedback">
+              { errors.username }
+            </div> }
+
           </div>
           <div className="form-group">
             <label htmlFor='password'>Password</label>
@@ -77,6 +101,10 @@ export default class App extends Component {
               value={password}
               onChange={this.handleChange}
             />
+            { errors.password &&
+            <div className="invalid-feedback">
+              { errors.password }
+            </div> }
           </div>
           <div className="form-group">
             <label htmlFor='repeatPassword'>Repeat password</label>
@@ -89,6 +117,10 @@ export default class App extends Component {
               value={repeatPassword}
               onChange={this.handleChange}
             />
+            { errors.repeatPassword &&
+            <div className="invalid-feedback">
+              { errors.repeatPassword }
+            </div> }
           </div>
           <div className="form-group">
             <label htmlFor="country">Country</label>
