@@ -12,6 +12,7 @@ export default class App extends Component {
       gender: 'male',
       agree: true,
       avatar: '',
+      age: 16,
       errors: {}
     }
   }
@@ -32,6 +33,10 @@ export default class App extends Component {
       errors.repeatPassword = 'Must be equal to password'
     }
 
+    if ( this.state.age <= 18 ) {
+      errors.age = 'Must be great than 18'
+    }
+
     this.setState({ errors })
 
     if ( !Object.keys(errors).length > 0 ) {
@@ -43,6 +48,26 @@ export default class App extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+  }
+
+  decrementAge = () => {
+    this.setState((prevState) => {
+      return { age: prevState.age - 1 }
+    }, this.validateAge)
+  }
+
+  incrementAge = () => {
+    this.setState((prevState) => {
+      return { age: prevState.age + 1 }
+    }, this.validateAge)
+  }
+
+  validateAge = () => {
+    if ( this.state.age <= 18 ) {
+      this.setState({ errors: { ...this.state.errors, age: 'Must be great than 18' } })
+    } else {
+      this.setState({ errors: { ...this.state.errors, age: false } })
+    }
   }
 
   onChangeAgree = (event) => {
@@ -68,7 +93,15 @@ export default class App extends Component {
   }
 
   render() {
-    const { username, password, repeatPassword, country, gender, agree, errors } = this.state
+    const {
+      username,
+      password,
+      repeatPassword,
+      country, gender,
+      agree,
+      errors,
+      age
+    } = this.state
 
     return (
       <div className="form-container card">
@@ -165,6 +198,43 @@ export default class App extends Component {
               </label>
             </div>
           </fieldset>
+          <div className="form-group">
+            <div>
+              <label htmlFor="">Age</label>
+            </div>
+            <div className="btn-group">
+              <button
+                className='btn btn-secondary'
+                type='button'
+                onClick={this.decrementAge}
+              >
+                -
+              </button>
+
+              <input
+                type="number"
+                name="age"
+                className='fom-control'
+                placeholder='Enter age'
+                value={age}
+                onChange={this.onChange}
+              />
+
+              <button
+                className='btn btn-secondary'
+                type='button'
+                onClick={this.incrementAge}
+              >
+                +
+              </button>
+            </div>
+            { errors.age &&
+              <div className="invalid-feedback">
+                { errors.age }
+              </div>
+            }
+
+          </div>
           <div className="form-group">
             <label htmlFor="avatar">Avatar</label>
             <input
