@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import countries from '../data/countries'
+import Field from './Field'
 
 export default class App extends Component {
   constructor(props) {
@@ -106,39 +107,37 @@ export default class App extends Component {
     return (
       <div className="form-container card">
         <form className="form card-body">
-          <div className="form-group">
-            <label htmlFor='username'>Username</label>
-            <input
-              type="text"
-              className="form-control"
-              name='username'
-              id='username'
-              placeholder="Enter username"
-              value={username}
-              onChange={this.handleChange}
-            />
-            { errors.username &&
-            <div className="invalid-feedback">
-              { errors.username }
-            </div> }
+          <Field
+            id='username'
+            labelText='Username'
+            type='text'
+            name='username'
+            placeholder='Enter username'
+            value={username}
+            onChange={this.handleChange}
+            error={errors.username}
+          />
+          <Field
+            id='password'
+            labelText='Password'
+            type='password'
+            name='password'
+            placeholder='Enter password'
+            value={password}
+            onChange={this.handleChange}
+            error={errors.password}
+          />
+          <Field
+            id='repeatPassword'
+            labelText='Repeat password'
+            type='password'
+            name='repeatPassword'
+            placeholder='Enter repeat password'
+            value={repeatPassword}
+            onChange={this.handleChange}
+            error={errors.repeatPassword}
+          />
 
-          </div>
-          <div className="form-group">
-            <label htmlFor='password'>Password</label>
-            <input
-              type="password"
-              name='password'
-              id='password'
-              className="form-control"
-              placeholder="Enter password"
-              value={password}
-              onChange={this.handleChange}
-            />
-            { errors.password &&
-            <div className="invalid-feedback">
-              { errors.password }
-            </div> }
-          </div>
           <div className="form-group">
             <label htmlFor='repeatPassword'>Repeat password</label>
             <input
